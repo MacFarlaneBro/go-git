@@ -669,6 +669,12 @@ func (w *Worktree) Submodules() (Submodules, error) {
 	return l, nil
 }
 
+func (w *Worktree) AddSubmodule(path string, url string, name string) *Submodule {
+	cfg := config.Submodule{Name: name, Path: path, URL: url}
+	submod := Submodule{initialized: false, c: &cfg, w: w}
+	return &submod
+}
+
 func (w *Worktree) newSubmodule(fromModules, fromConfig *config.Submodule) *Submodule {
 	m := &Submodule{w: w}
 	m.initialized = fromConfig != nil
